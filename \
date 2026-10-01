@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:17
+    container_name: my-postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=mydatabase
+  webapi:
+    image: mywebapi:latest
+    build:
+      context: ./CoreEngine
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+volumes:
+  pg_data:

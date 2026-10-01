@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:17
+    container_name: tm-postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=tmuser
+      - POSTGRES_PASSWORD=tmsecretpassword
+      - POSTGRES_DB=tmdatabase
+  coreengine:
+    image: coreengine:latest
+    build:
+      context: ./CoreEngine
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:8080
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=tmdatabase;Username=tmuser;Password=tmsecretpassword
+volumes:
+  pg_data:

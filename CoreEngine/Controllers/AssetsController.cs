@@ -17,4 +17,16 @@ public class AssetsController : ControllerBase
 	[HttpGet(Name="GetAssets")]
 
 	public IEnumerable<AssetComponent> Get() => _assetRepo.AllAssets();
+
+	[HttpGet("{id}")]
+
+	public ActionResult<AssetComponent> GetAsset(string id)
+	{
+		var asset = _assetRepo.GetAsset(id);
+		if (asset == null)
+		{
+			return NotFound();
+		}
+		return asset;
+	}
 }

@@ -29,4 +29,13 @@ public class AssetsController : ControllerBase
 		}
 		return asset;
 	}
+
+	[HttpPost]
+
+	public IActionResult Create(AssetComponent asset)
+	{
+		_assetRepo.AddAsset(asset);
+		return CreatedAtAction(nameof(GetAsset), 
+				new { id = asset.Id }, asset);
+	}
 }

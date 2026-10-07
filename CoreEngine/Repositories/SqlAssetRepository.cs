@@ -17,7 +17,7 @@ public class SqlAssetRepository : IAssetRepository
         return _context.AssetComponents.ToList();
     }
 
-    public AssetComponent GetAsset(string ID)
+    public AssetComponent? GetAsset(string ID)
     {
         return _context.AssetComponents.Find(ID);
     }
@@ -25,5 +25,11 @@ public class SqlAssetRepository : IAssetRepository
     public List<DocumentHotspot> AllHotspots()
     {
         return _context.DocumentHotspots.ToList();
+    }
+
+    public void AddAsset(AssetComponent asset)
+    {
+	_context.AssetComponents.Add(asset);
+	_context.SaveChanges();
     }
 }

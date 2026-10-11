@@ -38,4 +38,34 @@ public class AssetsController : ControllerBase
 		return CreatedAtAction(nameof(GetAsset), 
 				new { id = asset.Id }, asset);
 	}
+
+	[HttpPut("{id}")]
+
+	public IActionResult Update(string id, AssetComponent asset)
+	{
+		if (id != asset.Id)
+			return BadRequest();
+
+		var existingAsset = _assetRepo.GetAsset(id);
+		if (existingAsset is null)
+			return NotFound();
+
+		_assetRepo.UpdateAsset(asset);
+
+		return NoContent();
+	}
+
+	[HttpDelete("{id}")]
+
+	public IActionResult Delete(string id)
+	{
+		var asset = _assetRepo.GetAsset(id);
+
+		if (asset is null)
+			return NotFound();
+
+		_assetRepo.DeleteAsset(asset);
+
+		return NoContent();
+	}
 }

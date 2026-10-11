@@ -9,4 +9,6 @@ public interface IAssetRepository
 	AssetComponent? GetAsset(string ID);
 	List<DocumentHotspot> AllHotspots();
 	void AddAsset(AssetComponent Asset);
+	void UpdateAsset(AssetComponent Asset);
+	void DeleteAsset(AssetComponent Asset);
 }
